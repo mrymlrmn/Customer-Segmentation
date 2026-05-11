@@ -1,8 +1,8 @@
 __pycache__/
 .venv/
 .vscode/
-data/*.xlsx
-data/*.csv
-*.xlsx
-*.csv
+# data/*.xlsx
+# data/*.csv
+# *.xlsx
+# *.csv
 .DS_Store
