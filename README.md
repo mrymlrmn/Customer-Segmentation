@@ -1,29 +1,31 @@
-# Customer Segmentation Analysis (RFM + K-Means)
+# Identifying Customer Patterns (RFM Analysis)
 
-## Project Overview
-In this project, I analyzed over 540,000 transactions from an online retail dataset to group customers based on their buying patterns. I transformed the raw transaction data into a **Recency, Frequency, and Monetary (RFM)** model.
+## What is this project about?
+I took a dataset of over 540,000 retail transactions and tried to answer one big question: **"Who are our customers and how do they shop?"** Instead of looking at 500k rows of raw data, I grouped them into 3 clear categories using the **RFM model** (Recency, Frequency, Monetary). This helps a business know exactly who to reward and who to win back.
 
-## Why RFM?
-* **Recency (R):** Days since the last purchase.
-* **Frequency (F):** Total number of purchases.
-* **Monetary (M):** Total money spent by the customer.
+## How I did it
+* **Data Cleaning:** I cleaned the mess! Handled missing values and removed cancelled orders to make the data reliable.
+* **The "Elbow" Trick:** I used the Elbow Method to find the sweet spot for grouping. It turned out that 3 groups were the perfect way to describe this specific customer base.
+* **K-Means Clustering:** This is where the machine learning happens. It automatically tagged every customer based on their shopping habits.
 
-## My Approach
-1.  **Data Cleaning:** Handled missing values and removed cancelled orders.
-2.  **Feature Engineering:** Aggregated the 540k+ rows into unique customer profiles.
-3.  **Determining Clusters:** Used the **Elbow Method** to find the optimal number of segments.
-4.  **Clustering:** Applied the **K-Means algorithm** to label each customer group.
+## The Results
+Here is how we found our 3 types of customers:
+1.  **VIPs:** They shop often and spend the most. They are the heart of the business.
+2.  **At-Risk:** They used to shop but haven't been back in months. We need to reach out to them.
+3.  **Regulars:** They are steady and consistent, but there's room to grow their spending.
 
-## Findings: The Elbow Method
-By plotting the WCSS, I identified a clear "elbow" at **k=3**. This indicates that dividing the customers into 3 distinct groups provides the best balance between simplicity and detail.
+![My Elbow Plot](elbow_report.png)
 
-![Elbow Method Plot](elbow_report.png)
+## What's in the files?
+* **Business_Strategy_Report.xlsx**: The "Cheat Sheet" for managers. It shows the averages for each group.
+* **Final_Customer_Segments.xlsx**: The full list of 540k+ rows with a new "Cluster" column for marketing.
 
-## Key Learnings
-- Processing large-scale datasets (500k+ rows) with Pandas.
-- Implementing unsupervised machine learning (K-Means).
-- Translating technical data into business insights.
+## What I learned
+This project taught me how to handle huge Excel files without breaking them and, more importantly, how to turn complex numbers into a simple story that a business owner can understand.
 
-## Author
-* **Name:** [Maryam Larimian]
-* **Location:** Germany
+---
+**Developed by:** Maryam Larimian  
+**Location:** Germany  
+**LinkedIn:** [Maryam Larimian](https://www.linkedin.com/in/maryam-larimian)
+
+I built this project to practice data analysis. Currently, I am learning how to turn raw data into simple business reports.
