@@ -7,15 +7,15 @@ import pandas as pd
 def main():
     # 1. Data Loading
     loader = Cus_Segment_DataLoader()
-    raw_data = loader.data_loader("data/Mall_Customers.xlsx") 
+    raw_data = loader.data_loader("data/Online Retail.xlsx") 
 
     # 2. Preprocessing
     preprocessor = Cus_Segment_Preprocessor()
     scaled_data, clean_customer_df = preprocessor.process(raw_data)
 
     # 3. Visualization (Optional: you can comment this out after finding k)
-    # visualizer = Cus_Segment_Visualizer()
-    # visualizer.plot_elbow_method(scaled_data)
+    visualizer = Cus_Segment_Visualizer()
+    visualizer.plot_elbow_method(scaled_data)
 
     # 4. Model Training (Using our new trainer class)
     print("--- Training the Model ---")
@@ -35,7 +35,7 @@ def main():
     print("\n--- Business report saved as 'Business_Strategy_Report.xlsx'---")
 
     # 6. Save results
-    clean_customer_df.to_excel("data/Final_Customer_Segments.xlsx", index=False)
+    clean_customer_df.to_excel("data/Final_Online Retail.xlsx", index=False)
     print("\n Project execution completed successfully!")
 
 if __name__ == "__main__":
