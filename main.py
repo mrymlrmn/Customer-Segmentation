@@ -1,42 +1,32 @@
 from src.data_loader import Cus_Segment_DataLoader
 from src.preprocessing import Cus_Segment_Preprocessor
-from src.visualizer import Cus_Segment_Visualizer
-from src.model_trainer import Cus_Segment_Model  # New import
+from src.model_trainer import Cus_Segment_Model
 import pandas as pd
 
-def main():
-    # 1. Data Loading
+def run(file_path=None):
     loader = Cus_Segment_DataLoader()
-    raw_data = loader.data_loader("data/Online Retail.xlsx") 
+    raw_data = loader.data_loader(file_path)
 
-    # 2. Preprocessing
     preprocessor = Cus_Segment_Preprocessor()
     scaled_data, clean_customer_df = preprocessor.process(raw_data)
 
-    # 3. Visualization (Optional: you can comment this out after finding k)
-    visualizer = Cus_Segment_Visualizer()
-    visualizer.plot_elbow_method(scaled_data)
-
-    # 4. Model Training (Using our new trainer class)
-    print("--- Training the Model ---")
-    trainer = Cus_Segment_Model(n_clusters=3) # We chose 3 from the elbow plot
+    trainer = Cus_Segment_Model(n_clusters=3)
     clean_customer_df['Cluster'] = trainer.train(scaled_data)
 
-    # 5. Analysis
-    print("\n--- Cluster Analysis ---")
-    analysis = clean_customer_df.groupby('Cluster').agg({
-        'Total_Spent': 'mean',
-        'Frequency': 'mean',
-        'Recency': 'mean'
-    }).round(2)
-    print(analysis)
-    # Save final analysis report  to Excel
-    analysis.to_excel("data/Business_Strategy_Report.xlsx")
-    print("\n--- Business report saved as 'Business_Strategy_Report.xlsx'---")
+    cluster_means = clean_customer_df.groupby('Cluster')[['Total_Spent', 'Frequency', 'Recency']].mean()
+    labels = {}
+    for cluster in cluster_means.index:
+        if cluster_means.loc[cluster, 'Total_Spent'] == cluster_means['Total_Spent'].max():
+            labels[cluster] = 'VIP'
+        elif cluster_means.loc[cluster, 'Recency'] == cluster_means['Recency'].max():
+            labels[cluster] = 'At-Risk'
+        else:
+            labels[cluster] = 'Regular'
+    clean_customer_df['Segment'] = clean_customer_df['Cluster'].map(labels)
 
-    # 6. Save results
-    clean_customer_df.to_excel("data/Final_Online Retail.xlsx", index=False)
-    print("\n Project execution completed successfully!")
+    return clean_customer_df
 
 if __name__ == "__main__":
-    main()
+    df = run()
+    df.to_excel("data/Final_Customer_Segments.xlsx", index=False)
+    print("Project execution completed successfully!")
