@@ -1,6 +1,7 @@
 pandas
-openpyxl
-scikit-learn
+numpy
 matplotlib
 seaborn
+scikit-learn
 joblib
+streamlit
